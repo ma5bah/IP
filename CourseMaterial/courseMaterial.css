@@ -1,0 +1,175 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    letter-spacing: 0.2px;
+    font-family: "Poppins", sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: #fff;
+    width: 100%;
+    top: 0;
+    position: sticky;
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+    display: flex;
+    padding: 20px 110px;
+}
+
+.logo {
+    list-style-type: none;
+    width: 55%;
+    box-sizing: border-box;
+}
+
+.logo a {
+    color: #5fcf80;
+    font-size: 35px;
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: 1px;
+    /* text-transform: uppercase; */
+}
+
+.menu {
+    list-style-type: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 5px;
+    margin-top: 0px;
+}
+
+.menu li a {
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: 501;
+    color: #37423b;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.menu li a:hover,
+.dropdown-bar a:hover {
+    color: #5fcf80;
+}
+
+/* .dropdown {
+    display: inline;
+    position: relative;
+}
+
+.dropdown-bar {
+    position: absolute;
+    overflow: hidden;
+    list-style-type: none;
+    background-color: white;
+    display: none;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    opacity: 0;
+    transition-duration: 0.4s;
+}
+
+.dropdown:hover .dropdown-bar {
+    display: block;
+    top: 10px;
+    opacity: 1;
+}
+
+.dropdown-bar li {
+    padding: 18px 70px 18px 15px;
+} */
+
+.menu button {
+    background: #5fcf80;
+    color: #fff;
+    margin-top: -9px;
+    padding-right: 31px;
+    padding-left: 31px;
+    border-radius: 50px;
+    transition: 0.3s;
+    font-size: 14px;
+    border: none;
+}
+
+.menu button:hover {
+    background-color: #3ac162;
+    cursor: pointer;
+}
+.course-topic{
+    background-color: #282A35 !important;
+    position: sticky;
+    top: 75px;
+}
+.topic-list{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 95px;
+}
+.topic-list > li{
+    padding: 1em;
+    font-size: 1rem;
+    transition: 0.4s;
+}
+.topic-list > li > a{
+    color: white;
+}
+.topic-list > li:hover{
+    background-color: #3ac162;
+}
+.video-container{
+    background-color: #282A35 !important;
+    color: white;
+    height: 100vh;
+}
+.heading{
+    text-align: center;
+}
+.heading1{
+    font-size: 2.5rem;
+    padding: 1.9em 0 0.3em 0;
+}
+.heading2{
+    padding: 1.5em;
+}
+.videos-html{
+    margin: 0 12em;
+    display: grid;
+    height: 62%;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;    
+}
+.content{
+    background-color: black;
+    box-shadow: rgba(232, 224, 224, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+.all-videos-html{
+    border: 1px solid white;
+    border-radius: 3%;
+}
+.IDE-container{
+    margin: 0px 80px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+.TryYourself{
+    text-align: center;
+    margin: 2em;
+    color:#3ac162;
+    font-size: 2.5rem;
+}
+.IDE{
+    width: 100%;
+    height: 100vh;
+    border: none;
+}
