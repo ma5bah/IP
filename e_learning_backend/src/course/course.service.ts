@@ -147,7 +147,7 @@ export class CourseService {
         if (count > 30) {
           break;
         }
-        let url = `https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&key=${api_key}&part=snippet&fields=*`;
+        let url = `https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&maxResults=25&key=${api_key}&part=snippet&fields=*`;
         if (next_page_token !== "") {
           url = url + `&pageToken=${next_page_token}`;
         }

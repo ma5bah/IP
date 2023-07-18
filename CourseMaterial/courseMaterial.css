@@ -173,3 +173,11 @@ nav {
     height: 100vh;
     border: none;
 }
+.videos{
+    height: 15%;
+    background-color: white;
+    border: 1px solid black;
+}
+.all-videos-html{
+    overflow-y: scroll;
+}
