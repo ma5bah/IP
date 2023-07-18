@@ -33,9 +33,20 @@ export class CourseService {
   //     );
   //   }
   // }
-  async get_course() {
+  async get_course(course_id: string) {
     try {
-      return this.get_playlist_info('https://www.youtube.com/playlist?list=PLHiZ4m8vCp9OkrURufHpGUUTBjJhO9Ghy');
+      let url = "https://www.youtube.com/playlist?list=PLHiZ4m8vCp9OkrURufHpGUUTBjJhO9Ghy"
+      if (course_id) {
+        url = `https://www.youtube.com/playlist?list=${course_id}`
+      }
+      let course_data = await this.get_playlist_info(url);
+      
+      console.log(course_data===-1);
+      if(course_data===-1){
+        url = "https://www.youtube.com/playlist?list=PLHiZ4m8vCp9OkrURufHpGUUTBjJhO9Ghy";
+         course_data = await this.get_playlist_info(url);
+      }
+      return course_data;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
       }
@@ -139,7 +150,7 @@ export class CourseService {
     const api_key = this.configService.get("youtube_api_key");
     // verify if the url is a valid youtube playlist url
     const playlist_id = youtube_playlist_url.split("list=")[1];
-    let res_data:youtube_playlist_data;
+    let res_data: youtube_playlist_data;
     try {
       let count = 0;
       let next_page_token = "";
@@ -153,13 +164,17 @@ export class CourseService {
         }
         const res = await fetch(url);
         const data: youtube_playlist_data = await res.json();
-        if(count===0){
-          res_data=data;
-        }else{
+        if(data['error']){
+          throw data;
+          return;
+        }
+        if (count === 0) {
+          res_data = data;
+        } else {
           res_data.items.push(...data.items);
         }
         // console.log(data.nextPageToken)
-        if (data.nextPageToken=== "" || data.nextPageToken === null|| data.nextPageToken===undefined) {
+        if (data.nextPageToken === "" || data.nextPageToken === null || data.nextPageToken === undefined) {
           break;
         }
         next_page_token = data.nextPageToken;
@@ -170,7 +185,8 @@ export class CourseService {
       // console.log(data);
       return res_data;
     } catch (err) {
-      Logger.error(err);
+      
+      return -1;
     }
   }
 

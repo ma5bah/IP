@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
 import {CourseService} from "./course.service";
 import {CreateCourseDto} from "./dto/create_course.dto";
 import {GetCourseDto} from "./dto/get_course.dto";
@@ -19,8 +19,9 @@ export class CourseController {
     // async get_course(@Body() getCourseDto: GetCourseDto) {
     //     return this.courseService.get_course(getCourseDto);
     // }
-    @Get("get_course")
-    async get_course() {
-        return this.courseService.get_course();
+    @Get("get_course/")
+    async get_course(@Query('course_id') course_id) {
+        console.log(course_id);
+        return this.courseService.get_course(course_id);
     }
 }
