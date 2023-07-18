@@ -152,6 +152,7 @@ nav {
 }
 .content{
     background-color: black;
+    width: 100%;
     box-shadow: rgba(232, 224, 224, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
 }
 .all-videos-html{
@@ -175,8 +176,26 @@ nav {
 }
 .videos{
     height: 15%;
-    background-color: white;
-    border: 1px solid black;
+    background-color: black;
+    border: 1px solid grey;
+    display: flex;
+    justify-items: center;
+    padding: .5rem;
+}
+.videos:hover{
+    background-color: lightslategrey;
+    color: white;
+    cursor: pointer;
+    
+}
+.video_thumb{
+    flex-basis: 33.33%;
+}
+.video_title{
+    padding-left: 1rem;
+    justify-self: center;
+    align-self: center;
+    flex-basis: 66.67%;
 }
 .all-videos-html{
     overflow-y: scroll;
