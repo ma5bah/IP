@@ -15,8 +15,12 @@ export class CourseController {
     async get_all_courses() {
         return this.courseService.get_all_courses();
     }
+    // @Get("get_course")
+    // async get_course(@Body() getCourseDto: GetCourseDto) {
+    //     return this.courseService.get_course(getCourseDto);
+    // }
     @Get("get_course")
-    async get_course(@Body() getCourseDto: GetCourseDto) {
-        return this.courseService.get_course(getCourseDto);
+    async get_course() {
+        return this.courseService.get_course();
     }
 }
