@@ -11,18 +11,31 @@ export class CourseService {
   constructor(
     private prismaService: PrismaService,
     private configService: ConfigService,
-  ) {}
-  async get_course(getCourseDto: GetCourseDto) {
+  ) { }
+  // async get_course(getCourseDto: GetCourseDto) {
+  //   try {
+  //     const course_data = await this.prismaService.course.findFirstOrThrow({
+  //       where: {
+  //         id: getCourseDto.course_id,
+  //       },
+  //       include: {
+  //         lessons: true,
+  //       },
+  //     });
+  //     return;
+  //   } catch (error) {
+  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
+  //     }
+  //     Logger.error(error);
+  //     throw new HttpException(
+  //       { message: "Internal Server Error." },
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
+  async get_course() {
     try {
-      const course_data = await this.prismaService.course.findFirstOrThrow({
-        where: {
-          id: getCourseDto.course_id,
-        },
-        include: {
-          lessons: true,
-        },
-      });
-      return;
+      return this.get_playlist_info('https://www.youtube.com/playlist?list=PLHiZ4m8vCp9OkrURufHpGUUTBjJhO9Ghy');
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
       }
@@ -104,7 +117,7 @@ export class CourseService {
         for (let i = 0; i < data["items"].length; i++) {
           single_page_video_ids.push(
             "https://www.youtube.com/watch?v=" +
-              data["items"][i]["contentDetails"]["videoId"],
+            data["items"][i]["contentDetails"]["videoId"],
           );
         }
         video_ids.push(...single_page_video_ids);
@@ -122,22 +135,46 @@ export class CourseService {
   }
 
   async get_playlist_info(youtube_playlist_url: string) {
-    let video_ids: String[] = [];
+    let video_ids: youtube_playlist_data[] = [];
     const api_key = this.configService.get("youtube_api_key");
     // verify if the url is a valid youtube playlist url
     const playlist_id = youtube_playlist_url.split("list=")[1];
+    let res_data:youtube_playlist_data;
     try {
-      let url = `https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&key=${api_key}&part=snippet&fields=*`;
-      const res = await fetch(url);
-      const data: youtube_playlist_data = await res.json();
+      let count = 0;
+      let next_page_token = "";
+      while (true) {
+        if (count > 30) {
+          break;
+        }
+        let url = `https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&key=${api_key}&part=snippet&fields=*`;
+        if (next_page_token !== "") {
+          url = url + `&pageToken=${next_page_token}`;
+        }
+        const res = await fetch(url);
+        const data: youtube_playlist_data = await res.json();
+        if(count===0){
+          res_data=data;
+        }else{
+          res_data.items.push(...data.items);
+        }
+        // console.log(data.nextPageToken)
+        if (data.nextPageToken=== "" || data.nextPageToken === null|| data.nextPageToken===undefined) {
+          break;
+        }
+        next_page_token = data.nextPageToken;
+        count++;
+      }
+
+
       // console.log(data);
-      return data;
+      return res_data;
     } catch (err) {
       Logger.error(err);
     }
   }
 
-  async updateCourse() {}
+  async updateCourse() { }
 }
 type youtube_playlist_data = {
   kind: string;

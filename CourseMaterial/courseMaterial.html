@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./courseMaterial.css">
 </head>
-<body>
+<body onload="on_course_page_load()">
     <header>
         <nav>
             <li class="logo"><a href="#">EdUn</a></li>
@@ -48,13 +48,14 @@
         <h2 class = "heading2 heading">Learn the basics of HTML in this fun and engaging video tutorial.</h2>
 
         <div class = "videos-html">
-            <div class="current-video-html content">Current Video</div>
-            <div class="all-videos-html content">Video List</div>
+            <div id="current_video" class="current-video-html content">Current Video</div>
+            <div id="list_of_videos" class="all-videos-html content">Video List</div>
         </div>
     </div>
     <div class="IDE-container">
         <h1 class = "TryYourself">Try It Yourself</h1>
         <iframe src="../IDE/ide.html" class = "IDE"></iframe>
     </div>
+    <script src="./courseMaterial.js"></script>
 </body>
 </html>
