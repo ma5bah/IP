@@ -40,11 +40,11 @@ export class CourseService {
         url = `https://www.youtube.com/playlist?list=${course_id}`
       }
       let course_data = await this.get_playlist_info(url);
-      
-      console.log(course_data===-1);
-      if(course_data===-1){
+
+      console.log(course_data === -1);
+      if (course_data === -1) {
         url = "https://www.youtube.com/playlist?list=PLHiZ4m8vCp9OkrURufHpGUUTBjJhO9Ghy";
-         course_data = await this.get_playlist_info(url);
+        course_data = await this.get_playlist_info(url);
       }
       return course_data;
     } catch (error) {
@@ -151,6 +151,7 @@ export class CourseService {
     // verify if the url is a valid youtube playlist url
     const playlist_id = youtube_playlist_url.split("list=")[1];
     let res_data: youtube_playlist_data;
+    this.get_playlist_name_desc(youtube_playlist_url);
     try {
       let count = 0;
       let next_page_token = "";
@@ -164,12 +165,16 @@ export class CourseService {
         }
         const res = await fetch(url);
         const data: youtube_playlist_data = await res.json();
-        if(data['error']){
+
+        if (data['error']) {
           throw data;
           return;
         }
         if (count === 0) {
           res_data = data;
+          const title_desc = await this.get_playlist_name_desc(youtube_playlist_url);
+          res_data.playlist_title = title_desc['title'];
+          res_data.playlist_description = title_desc['description'];
         } else {
           res_data.items.push(...data.items);
         }
@@ -185,14 +190,33 @@ export class CourseService {
       // console.log(data);
       return res_data;
     } catch (err) {
-      
       return -1;
     }
   }
+  async get_playlist_name_desc(youtube_playlist_url: string) {
+    const api_key = this.configService.get("youtube_api_key");
+    const playlist_id = youtube_playlist_url.split("list=")[1];
 
+    try {
+
+      let url = `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlist_id}&key=${api_key}&part=snippet&fields=*`;
+
+      const res = await fetch(url);
+
+      const data = await res.json();
+      return {
+        title: data['items'][0]['snippet']['title'],
+        description: data['items'][0]['snippet']['description']
+      };
+    } catch (err) {
+      return -1;
+    }
+  }
   async updateCourse() { }
 }
 type youtube_playlist_data = {
+  playlist_title: string;
+  playlist_description: string;
   kind: string;
   etag: string;
   nextPageToken: string;
